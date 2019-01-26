@@ -1,0 +1,46 @@
+ELMER SOLVER (v 8.3) STARTED AT: 2018/09/16 12:00:47
+ELMER SOLVER (v 8.3) STARTED AT: 2018/09/16 12:00:47
+ELMER SOLVER (v 8.3) STARTED AT: 2018/09/16 12:00:47
+ELMER SOLVER (v 8.3) STARTED AT: 2018/09/16 12:00:47
+ParCommInit:  Initialize #PEs:            4
+ParCommInit:  Initialize #PEs:            4
+ParCommInit:  Initialize #PEs:            4
+ParCommInit:  Initialize #PEs:            4
+MAIN: 
+MAIN: =============================================================
+MAIN: ElmerSolver finite element software, Welcome!
+MAIN: This program is free software licensed under (L)GPL
+MAIN: Copyright 1st April 1995 - , CSC - IT Center for Science Ltd.
+MAIN: Webpage http://www.csc.fi/elmer, Email elmeradm@csc.fi
+MAIN: Version: 8.3 (Rev: b63f1a97, Compiled: 2018-09-15)
+MAIN:  Running in parallel using 4 tasks.
+MAIN:  Running with just one thread per task.
+MAIN:  MUMPS library linked in.
+MAIN: =============================================================
+ERROR:: ElmerSolver: Unable to find ELMERSOLVER_STARTINFO, can not execute.
+ERROR:: ElmerSolver: Unable to find ELMERSOLVER_STARTINFO, can not execute.
+ERROR:: ElmerSolver: Unable to find ELMERSOLVER_STARTINFO, can not execute.
+ERROR:: ElmerSolver: Unable to find ELMERSOLVER_STARTINFO, can not execute.
+--------------------------------------------------------------------------
+mpirun has exited due to process rank 2 with PID 0 on
+node joe-lappy exiting improperly. There are three reasons this could occur:
+
+1. this process did not call "init" before exiting, but others in
+the job did. This can cause a job to hang indefinitely while it waits
+for all processes to call "init". By rule, if one process calls "init",
+then ALL processes must call "init" prior to termination.
+
+2. this process called "init", but exited without calling "finalize".
+By rule, all processes that call "init" MUST call "finalize" prior to
+exiting or it will be considered an "abnormal termination"
+
+3. this process called "MPI_Abort" or "orte_abort" and the mca parameter
+orte_create_session_dirs is set to false. In this case, the run-time cannot
+detect that the abort call was an abnormal termination. Hence, the only
+error message you will receive is this one.
+
+This may have caused other processes in the application to be
+terminated by signals sent by mpirun (as reported here).
+
+You can avoid this message by specifying -quiet on the mpirun command line.
+--------------------------------------------------------------------------

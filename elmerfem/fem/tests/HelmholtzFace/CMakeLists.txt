@@ -1,0 +1,10 @@
+INCLUDE(test_macros)
+INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR}/fem/src)
+
+CONFIGURE_FILE( Htest.sif Htest.sif COPYONLY)
+ADD_ELMERTEST_MODULE(HelmholtzFace Helmholtz Helmholtz.f90)
+
+file(COPY square.grd ELMERSOLVER_STARTINFO Helmholtz.f90 DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
+
+ADD_ELMER_TEST(HelmholtzFace)
+ADD_ELMER_LABEL(HelmholtzFace quick)

@@ -1,0 +1,10 @@
+INCLUDE(test_macros)
+INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR}/fem/src)
+
+CONFIGURE_FILE( 1d.sif 1d.sif COPYONLY)
+ADD_ELMERTEST_MODULE(2ndtime Source Source.f90)
+ADD_ELMERTEST_MODULE(2ndtime TimeIntegrate TimeIntegrate.f90)
+
+file(COPY ELMERSOLVER_STARTINFO Source.f90 1d.grd  TimeIntegrate.f90 1d DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
+
+ADD_ELMER_TEST(2ndtime)

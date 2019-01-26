@@ -1,0 +1,9 @@
+INCLUDE(test_macros)
+INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR}/fem/src)
+
+CONFIGURE_FILE( temp.sif temp.sif COPYONLY)
+
+file(COPY ELMERSOLVER_STARTINFO tmesh tmesh.grd  DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
+
+ADD_ELMER_TEST(passive)
+ADD_ELMER_LABEL(passive quick)

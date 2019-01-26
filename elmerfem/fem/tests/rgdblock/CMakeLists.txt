@@ -1,0 +1,8 @@
+INCLUDE(test_macros)
+INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR}/fem/src)
+
+CONFIGURE_FILE( rigidblock.sif rigidblock.sif COPYONLY)
+
+file(COPY ELMERSOLVER_STARTINFO anturi.grd  DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
+
+ADD_ELMER_TEST(rgdblock)

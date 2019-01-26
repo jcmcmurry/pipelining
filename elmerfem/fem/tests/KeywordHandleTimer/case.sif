@@ -1,0 +1,106 @@
+! Test case for ListGetElement routines.
+! This test case for Logical, Integer, String types. 
+
+Check Keywords Warn
+
+Header
+  Mesh DB "." "square"
+End
+
+Simulation
+  Max Output Level = 12
+  Coordinate System = Cartesian
+  Simulation Type = Steady State 
+  Output Intervals = 1
+  Steady State Max Iterations = 1
+
+  Simulation Timing = Logical True
+  Timer Results = Logical True
+End
+
+Body 1
+  Equation = 1
+  Material = 1
+  Body Force = 1
+End
+
+Body 2
+  Equation = 1
+  Material = 2
+  Body Force = 1
+End
+
+Body 3
+  Equation = 1
+  Material = 3
+  Body Force = 1
+End
+
+
+Equation 1
+  Active Solvers(1) = 1 
+End
+
+
+Solver 1
+  Equation = KeywordTimer
+  Variable = ConsB
+  Variable DOFs = 1
+  Procedure = "./KeywordCompare" "KeywordCompare"
+
+  Solver Timing = True
+  Timer Sweeps = Integer 100
+End
+
+
+Body Force 1 
+  Name = "BodyForce" 
+
+  Logical Value D = Logical True  
+  Integer Value D = Integer 1  
+End 
+
+Material 1
+  Name = "Material"
+
+  Logical Value A = Logical True
+  Logical Value B = Logical True  
+  Logical Value C = Logical True  
+
+  Integer Value A = Integer 1
+  Integer Value B = Integer 1
+  Integer Value C = Integer 1 
+
+  String Value A = String "Str Target A"
+  String Value B = String "Str Target B"
+End
+
+
+Material 2
+  Logical Value A = Logical True
+  Logical Value B = Logical False   
+  Logical Value C = Logical True  
+
+  Integer Value A = Integer 1
+  Integer Value B = Integer 2
+  Integer Value C = Integer 2 
+
+  String Value A = String "Str Target A"
+  String Value B = String "Str Target B var"
+End
+
+
+Material 3
+  Integer Value A = Integer 1
+  Integer Value B = Integer 3
+!  Integer Value C = Integer 1 
+
+  String Value A = String "Str Target A"
+!  String Value B = String "Str Target B"
+End
+
+Solver 1 :: Reference Norm = Real 1.0
+
+
+!End Of File
+

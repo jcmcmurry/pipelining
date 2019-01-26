@@ -1,0 +1,72 @@
+ElmerSolver cmake test case how-to 
+==================================
+Juhani Kataja / CSC, 2014/11, updated 2017/1
+
+
+The aim of this document is to describe how to create a minimalistic test
+problem using cmake/ctest. 
+
+
+Quick the Instructions for creating a ctest from scratch
+--------------------------------------------------------
+
+1)    Create a subdirectory in "fem/tests/<testname>" named after the test
+
+2)    Define your analysis write your <sifname>.sif file, mesh files, f90-files
+      etc. necessary to run the test analysis ELMERSOLVER_STARTINFO.
+      
+      In order to test a norm resulting from a solver, add the lines
+################################################################################
+Reference Norm = Real <norm>
+Reference Norm Tolerance = Real <tol>
+################################################################################
+      to the <sifname>.sif file inside the solver block to be tested.
+
+      Equivalently, top-level directives
+################################################################################
+Solver N :: Reference Norm = Real <norm>
+Solver N :: Reference Norm Tolerance = Real <tol>
+################################################################################
+      may be used.
+      
+
+3)    Create CMakeLists.txt file in the test directory containing. 
+################################################################################
+INCLUDE(test_macros)
+
+CONFIGURE_FILE(<sifname>.sif <sifname>.sif COPYONLY)
+
+ADD_ELMERTEST_MODULE(<testname> <modulename> <modulesource.f90>)
+
+file(COPY ELMERSOLVER_STARTINFO <file_1> <file_2> ... <file_n> DESTINATION
+"${CMAKE_CURRENT_BINARY_DIR}/")
+
+ADD_ELMER_TEST(<testname>)
+################################################################################
+
+4)    Create runtest.cmake containing
+################################################################################
+include(${TEST_SOURCE}/../test_macros.cmake)
+execute_process(COMMAND <command-name> <arg1> <arg2> ...)
+RUN_ELMER_TEST()
+################################################################################
+
+5)    To run the test, compile Elmer and run "ctest -R <testname>" in the build
+      directory (This will run all test matching <testname>)
+
+
+Parallel tests and labels
+-------------------------
+
+The command ADD_ELMER_TEST() accepts following optional arguments
+
+ADD_ELMER_TEST(<testname> NPROC <n> LABELS <label_1> <label_2> ... <label_m>)
+
+where n is the number of MPI processes and <label_i> is a label associated with the tests.
+
+Having parallel test requires partitioned mesh as well. That can be automatically done in
+the runtest.cmake file with the `execute_process` cmake command:
+
+execute_process(COMMAND ${ELMERGRID_BIN} 2 2 <meshdir> -partition <...> -nooverwrite)
+
+This will execute ElmerGrid with arguments "2 2 <meshdir> -partition <...> -nooverwrite".

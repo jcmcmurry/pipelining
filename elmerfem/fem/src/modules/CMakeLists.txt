@@ -1,0 +1,13 @@
+INCLUDE_DIRECTORIES("${CMAKE_BINARY_DIR}/fem/src")
+INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/fhutiter/include")
+INCLUDE(AddModules)
+
+ADD_ELMER_MODULES(SKIP contrib)
+
+IF(WITH_CONTRIB)
+  ADD_SUBDIRECTORY(contrib)
+ENDIF(WITH_CONTRIB)
+
+ADD_DEPENDENCIES(EliminatePeriodic EliminateDirichlet)
+ADD_DEPENDENCIES(FourierLoss MagnetoDynamics)
+TARGET_LINK_LIBRARIES(EliminatePeriodic EliminateDirichlet)

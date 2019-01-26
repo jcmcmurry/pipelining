@@ -1,0 +1,170 @@
+Header
+  CHECK KEYWORDS Warn
+  Mesh DB "." "Mesh"
+End
+
+Simulation
+  Max Output Level = 5
+
+  Coordinate System = "Cartesian 2D"
+
+  Simulation Type = "Steady State"
+  Steady State Max Iterations = 1
+
+  Solver Input File = "TempDist.sif"
+End
+
+Constants
+  Gravity(4) = 0 -1 0 9.82
+  Stefan Boltzmann = 5.67e-08
+End
+
+Body 1
+  Equation = 1
+  Material = 1
+End
+
+Equation 1 :: Active Solvers = 1
+
+Solver 1
+  Equation = "Heat Equation"
+
+  Linear System Solver = "Direct"
+  Linear System Abort Not Converged = True
+  Linear System Preconditioning = ILU0
+  Linear System Max Iterations = 3500
+  Linear System Residual Output = 1
+  Linear System Convergence Tolerance = 1.0e-12
+
+  Steady State Convergence Tolerance = 1.0e-05
+End
+
+
+Material 1
+  Density = 1
+  Heat Conductivity = 1
+End
+
+
+Boundary Condition 1 :: Target Boundaries(6) = $ 1:6
+
+
+Solver 1 :: Reference Norm = Real 1
+Solver 1 :: Linear System Solver = Direct
+Solver 1 :: Linear System Direct Method = Banded
+
+Boundary Condition 1 :: Temperature = 1
+Solver 1 :: Reference Norm = Real 1.0
+
+RUN
+
+
+Solver 1 :: Reference Norm = Real 2
+Solver 1 :: Linear System Solver = Direct
+Solver 1 :: Linear System Direct Method = UMFPack
+Solver 1 :: Reference Norm = Real 2.0
+
+Boundary Condition 1 :: Temperature = 2
+RUN
+
+
+Solver 1 :: Reference Norm = Real 3
+Solver 1 :: Linear System Solver = Iterative
+Solver 1 :: Linear System Iterative Method = Jacobi
+Solver 1 :: Reference Norm = Real 3.0
+
+Boundary Condition 1 :: Temperature = 3
+RUN
+
+
+Solver 1 :: Reference Norm = Real 4
+Solver 1 :: Linear System Solver = Iterative
+Solver 1 :: Linear System Iterative Method = SGS
+Solver 1 :: Reference Norm = Real 4.0
+
+Boundary Condition 1 :: Temperature = 4
+RUN
+
+
+Solver 1 :: Reference Norm = Real 5
+Solver 1 :: Linear System Solver = Iterative
+Solver 1 :: Linear System Iterative Method = CG
+Solver 1 :: Reference Norm = Real 5.0
+
+Boundary Condition 1 :: Temperature = 5
+RUN
+
+
+Solver 1 :: Reference Norm = Real 6
+Solver 1 :: Linear System Solver = Iterative
+Solver 1 :: Linear System Iterative Method = CGS
+Solver 1 :: Reference Norm = Real 6.0
+
+Boundary Condition 1 :: Temperature = 6
+RUN
+
+
+Solver 1 :: Reference Norm = Real 7
+Solver 1 :: Linear System Solver = Iterative
+Solver 1 :: Linear System Iterative Method = QMR
+Solver 1 :: Reference Norm = Real 7.0
+
+Boundary Condition 1 :: Temperature = 7
+RUN
+
+
+Solver 1 :: Reference Norm = Real 8
+Solver 1 :: Linear System Solver = Iterative
+Solver 1 :: Linear System Iterative Method = TFQMR
+Solver 1 :: Reference Norm = Real 8.0
+
+Boundary Condition 1 :: Temperature = 8
+RUN
+
+
+Solver 1 :: Reference Norm = Real 9
+Solver 1 :: Linear System Solver = Iterative
+Solver 1 :: Linear System Iterative Method = GMRES
+Solver 1 :: Reference Norm = Real 9.0
+
+Boundary Condition 1 :: Temperature = 9
+RUN
+
+
+Solver 1 :: Reference Norm = Real 10
+Solver 1 :: Linear System Solver = Iterative
+Solver 1 :: Linear System Iterative Method = BiCGStab
+Solver 1 :: Reference Norm = Real 10.0
+
+Boundary Condition 1 :: Temperature = 10
+RUN
+
+
+Solver 1 :: Reference Norm = Real 11
+Solver 1 :: Linear System Solver = Iterative
+Solver 1 :: Linear System Iterative Method = BiCGStab2
+Solver 1 :: Reference Norm = Real 11.0
+
+Boundary Condition 1 :: Temperature = 11
+RUN
+
+
+Solver 1 :: Reference Norm = Real 12
+Solver 1 :: Linear System Solver = Iterative
+Solver 1 :: Linear System Iterative Method = BiCGStabL
+Solver 1 :: Reference Norm = Real 12
+
+
+Boundary Condition 1 :: Temperature = 12
+RUN
+
+Solver 1 :: Reference Norm = Real 13
+Solver 1 :: Linear System Solver = Iterative
+Solver 1 :: Linear System Iterative Method = idrs
+Solver 1 :: Reference Norm = Real 13
+
+Boundary Condition 1 :: Temperature = 13
+RUN
+
+
+!End Of File

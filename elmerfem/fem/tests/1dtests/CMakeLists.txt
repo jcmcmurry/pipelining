@@ -1,0 +1,11 @@
+INCLUDE(test_macros)
+INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR}/fem/src)
+
+CONFIGURE_FILE( 1d.sif 1d.sif COPYONLY)
+ADD_ELMERTEST_MODULE(1dtests Poisson Poisson.f90)
+ADD_ELMERTEST_MODULE(1dtests Source Source.f90)
+
+file(COPY Poisson.f90 ELMERSOLVER_STARTINFO Source.f90 1d.grd  tmp.log DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
+
+ADD_ELMER_TEST(1dtests)
+ADD_ELMER_LABEL(1dtests quick)

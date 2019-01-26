@@ -1,0 +1,21 @@
+*~
+tags
+*.o
+*.vtu
+*.pvtu
+*.swp
+*.so
+
+# build stuff
+build
+CMakeFiles
+CTestTestfile.cmake
+Elmer-linux-ubuntu12.cmake
+Makefile
+builddir
+cmake_install.cmake
+compile_*.sh
+create_module_file.sh
+run_mgdyn_tests.sh
+fem/tests/CircuitsAndDynamics
+slurm*out

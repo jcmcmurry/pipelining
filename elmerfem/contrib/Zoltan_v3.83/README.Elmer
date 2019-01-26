@@ -1,0 +1,10 @@
+Notice about modification
+-------------------------
+
+This is modified version of Zoltan and should not be considered as the original
+one.
+
+The build system has been modified to interoperate with that of Elmer
+(https://www.csc.fi/web/elmer).
+
+Juhani Kataja / CSC - Finnish IT Center for Science 2018/12

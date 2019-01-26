@@ -1,0 +1,9 @@
+INCLUDE(test_macros)
+INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR}/fem/src)
+
+CONFIGURE_FILE( crucible.sif crucible.sif COPYONLY)
+
+file(COPY ELMERSOLVER_STARTINFO  crucible.grd DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
+
+ADD_ELMER_TEST(InductionHeating)
+ADD_ELMER_LABEL(InductionHeating quick)

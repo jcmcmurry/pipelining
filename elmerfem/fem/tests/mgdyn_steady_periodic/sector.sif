@@ -1,0 +1,135 @@
+Check Keywords "Warn" 
+INCLUDE sector/mesh.names
+
+Header
+Mesh DB "." "sector"
+End
+
+Simulation
+  Max Output Level = 5
+
+  Coordinate System = "Cartesian"
+  Simulation Type = Steady State
+  Steady State Max Iterations = 1
+
+  Mesh Levels = 2
+End
+
+Initial Condition 1
+  P = Real 0
+  P {e} = Real 0
+End
+
+Solver 1
+   Equation = "MGDynamics"
+
+   Variable = "P"
+   Procedure = "MagnetoDynamics" "WhitneyAVSolver"
+
+   Apply Mortar BCs = Logical True
+   Edge Basis = Logical True
+   Fix Input Current Density = Logical False
+
+   Linear System Symmetric = Logical True
+   Linear System Solver = "Iterative"
+   Linear System Preconditioning = ilu0
+   Linear System Convergence Tolerance = 1e-10
+   Linear System Residual Output = 50
+   Linear System Max Iterations = 5000
+   BiCGstabl polynomial degree = 4
+   Linear System Iterative Method = BiCGStabl
+
+   Steady State Convergence Tolerance = 1e-6
+   Linear System Abort Not Converged = False
+End
+
+
+Solver 2
+   Equation = "MGDynamicsCalc"
+   Procedure = "MagnetoDynamics" "MagnetoDynamicsCalcFields"
+   Linear System Symmetric = True
+   Potential Variable = String "P"
+
+   Calculate Magnetic Vector Potential = Logical true
+   Steady State Convergence Tolerance = 0
+   Linear System Solver = "Iterative"
+   Linear System Preconditioning = None
+   Linear System Residual Output = 0
+   Linear System Max Iterations = 5000
+   Linear System Iterative Method = CG
+   Steady State Convergence Tolerance = 1e-6
+   Linear System Convergence Tolerance = 1.0e-10
+End
+
+Solver 3
+  Exec Solver = after all
+  Equation = "ResultOutput"
+  Procedure = "ResultOutputSolve" "ResultOutputSolver"
+  Output File Name = sector
+  Vtu format = Logical True
+End
+
+Equation 1
+  Name = "Coupled Equations"
+  Active Solvers(2) = 1 2
+End
+
+Material 1
+  Name = "Air"
+  Electric Conductivity = 0
+  Relative Permeability = 1
+End
+
+Material 2
+  Name = "magnet"
+  Electric Conductivity = 0
+  Relative Permeability = 1
+End
+
+Body 1
+   Name = "Air"
+   Target Bodies(1) = $ air
+   Equation = 1
+   Material = 1
+End
+
+Body 2
+   Name = "magnet"
+   Target Bodies(1) = $ magnet
+   Equation = 1
+   Material = 2
+   Body Force = 1
+End
+
+Body Force 1
+  Name = "Magnetization"
+  Magnetization 2 = Real 1.0e6
+End
+
+Boundary Condition 1
+  Target Boundaries(3) = $ top bottom outer_surface
+  P {e} = real 0
+End
+
+Boundary Condition 2
+  Target Boundaries(1) = $ source_face
+  Mortar BC = Integer 3
+  Radial Projector = True
+  Level Projector = Logical True
+  Level Projector Generic = Logical True
+End
+
+Boundary Condition 3
+  Target Boundaries(1) = $ target_face
+End
+
+Solver 1 :: Reference Norm = Real 0.22286038E-05
+Solver 1 :: Reference Norm Tolerance = Real 1.0e-5
+
+Solver 2 :: Reference Norm = Real 1.788013E-03
+Solver 2 :: Reference Norm Tolerance = Real 1.0e-1
+
+
+RUN
+
+
